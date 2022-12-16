@@ -75,9 +75,18 @@ export default function Home({ data, pesquisar}){
     return (
         <div>
             <Navbar className="my-2" color="secondary" dark>
-                <NavbarBrand>
-                    Reactstrap
+                <NavbarBrand href='/'>
+                    DigiNext
                 </NavbarBrand>
+                <Nav>
+                    <NavLink style ={{color: 'white'}} href='/'>
+                        Digimons
+                    </NavLink>
+                    <NavLink style ={{color: 'white'}} href='/contact'>
+                        Contatos
+                    </NavLink>
+                </Nav>
+                
                     <Form method='GET'>
                         <FormGroup>
                           <div class="input-group mb-3">
