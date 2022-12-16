@@ -52,7 +52,8 @@ class ModalExample extends React.Component {
             <br />
             <label>
               Esse é {this.props.name} o digimon de level {this.props.level} as informações 
-              acerca dele ainda são pouco conhecidas
+              acerca dele ainda são pouco conhecidas, para saber mais sobre esse digimon acesse 
+              o link abaixo ou clique no botão <a href={'/digimons/' + this.props.name}>"Detalhes"</a>.
             </label>
           </ModalBody>
           <ModalFooter>
