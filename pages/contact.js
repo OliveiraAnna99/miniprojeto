@@ -8,9 +8,9 @@ import {
 export default function Contact({pesquisar}){
     return(
         <div>
-             <Navbar className="my-2" color="secondary" dark>
+              <Navbar className="my-2" color="secondary" dark>
                 <NavbarBrand href='/'>
-                            DigiNext
+                    DigiNext
                 </NavbarBrand>
                 <Nav>
                     <NavLink style ={{color: 'white'}} href='/'>
@@ -20,11 +20,11 @@ export default function Contact({pesquisar}){
                         Contatos
                     </NavLink>
                 </Nav>
-               
-                    <Form method='GET'>
+                
+                    <Form method='GET' action='/search'>
                         <FormGroup>
                           <div class="input-group mb-3">
-                            <Input  placeholder ='' value={pesquisar}/>
+                            <Input   name="pesquisar" placeholder ='Pesquisa por atributo' />
                             <div class="input-group-append">
                                 <Input type='submit' color='primary' value ='Buscar'></Input>
                             </div>

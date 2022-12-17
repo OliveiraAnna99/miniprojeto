@@ -10,9 +10,9 @@ export default function Digimons({data, data2,pesquisar}){
     return (
       
             <>
-            <Navbar className="my-2" color="secondary" dark>
+             <Navbar className="my-2" color="secondary" dark>
                 <NavbarBrand href='/'>
-                            DigiNext
+                    DigiNext
                 </NavbarBrand>
                 <Nav>
                     <NavLink style ={{color: 'white'}} href='/'>
@@ -22,11 +22,11 @@ export default function Digimons({data, data2,pesquisar}){
                         Contatos
                     </NavLink>
                 </Nav>
-               
-                    <Form method='GET'>
+                
+                    <Form method='GET' action='/search'>
                         <FormGroup>
                           <div class="input-group mb-3">
-                            <Input  placeholder ='' value={pesquisar}/>
+                            <Input   name="pesquisar" placeholder ='Pesquisa por atributo' />
                             <div class="input-group-append">
                                 <Input type='submit' color='primary' value ='Buscar'></Input>
                             </div>
@@ -61,9 +61,8 @@ export default function Digimons({data, data2,pesquisar}){
                                         <img src={data2[contador].image_url} style={{width: '40%'}}></img>
                                     </div>
                                     <div className='col' style={{textAlign: 'justify'}}>
-                                        Esse é o {data2[contador].name} o digimon do tipo {data2[contador].digi_type}, devido a sua coloração
-                                        {data2[contador].color} esse digimon chama bastante atenção entre os digiescolhidos, 
-                                        esse digimon possuí como principal atributo, o atributo : {data2[contador].attribute}. Além de estar no level {data2[contador].level} esse
+                                        Esse é o {data2[contador].name} o digimon do tipo {data2[contador].digi_type}, devido a sua coloração {data2[contador].color} esse digimon chama bastante atenção entre os digiescolhidos, 
+                                        esse digimon possuí como principal atributo, o atributo {data2[contador].attribute}. Além de estar no level {data2[contador].level} esse
                                         curioso digimon possuí: raridade {data2[contador].cardrarity}, essa a esquerda é sua card
                                     </div>
                                 </div>

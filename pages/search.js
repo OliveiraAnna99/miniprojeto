@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-    Navbar, NavItem, NavbarToggler, Collapse, NavLink, Nav, NavbarBrand, Card, Pagination, TablePagination, Modal,
-    Form, Table, Button, FormGroup,InputGroup, InputGroupText, InputGroupAddon, Input, link, CardHeader, CardBody
-} from 'reactstrap';
-
-import {ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, CardHeader, Table, FormGroup, Label, Input, Card, CardBody, CardText, CardTitle} from 'reactstrap';
+import {ModalHeader, ModalBody, ModalFooter, Modal, Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
+import React, { useState } from 'react';
 
 class ModalExample extends React.Component {
   constructor(props) {
@@ -48,7 +44,7 @@ class ModalExample extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Informações Adicionais</ModalHeader>
           <ModalBody>
-           <center> <img src={this.props.img} style={{width: '30%'}}></img></center>
+           <center> <img src={this.props.image_url} style={{width: '30%'}}></img></center>
             <br />
             <label>
               Esse é {this.props.name} o digimon de level {this.props.level} as informações 
@@ -65,12 +61,12 @@ class ModalExample extends React.Component {
     );
   }
 }
-export default function Home({ data, pesquisar, data2}){
+export default function Digimons({data, pesquisar}){
+    const sizeCard = {width: "70%"}
     let id = 1;
-    let id2 = 1;
     return (
         <div>
-            <Navbar className="my-2" color="secondary" dark>
+          <Navbar className="my-2" color="secondary" dark>
                 <NavbarBrand href='/'>
                     DigiNext
                 </NavbarBrand>
@@ -94,7 +90,19 @@ export default function Home({ data, pesquisar, data2}){
                         </FormGroup>
                     </Form> 
             </Navbar>
-            
+          <br></br>
+          <center>
+            <Card style={sizeCard}>
+              <CardBody>
+                <CardTitle>Pesquisa Por Atributo</CardTitle>
+                <Form inline method='GET'>
+                  <FormGroup className="mb-2 mr-sm-2">
+                    <Input type="text" name="pesquisar" placeholder="Buscar por ..."  defaultValue={pesquisar} style={{width: '60%'}}/>
+                  </FormGroup>
+                  <Button color='primary'>Search</Button>
+                </Form>
+            <div style={{height: '5rem'}}>
+            </div> 
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <Card>
                 <CardHeader><h4><b>Tabela de Digimons</b></h4></CardHeader>
@@ -123,7 +131,7 @@ export default function Home({ data, pesquisar, data2}){
                                             <td>{m.name}</td>                         
                                             <td>{m.level}</td>                         
                                             <td><Button color='warning' key={m.name} href={'/digimons/' + m.name }>Detalhes</Button></td>                         
-                                            <td> <ModalExample level={m.level} name={m.name} img={m.img}></ModalExample> </td>                  
+                                            <td> <ModalExample level={m.level} name={m.name} image_url={m.image_url}></ModalExample> </td>                  
                                         </tr>
                                       
                                     </tbody>
@@ -137,80 +145,36 @@ export default function Home({ data, pesquisar, data2}){
                 </Card>  
                    
             </div>
-            <div style={{height:'8rem'}}></div>
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <Card>
-                <CardHeader><h4><b>Tabela de Atributos</b></h4></CardHeader>
-                <CardBody>
-                    <div style={{maxHeight: '310px', overflowY:' auto'}}>
-                <center>
-                    <Table style={{ width: '85%', textAlign: 'center'}}  className="table table-light table-sm order={['age', 'asc' ]}" cellspacing="0"  bordered height="310" >
-                
-                        <thead>
-                            <tr>
-                                <th class="th-sm">#</th> 
-                                <th class="th-sm"> Atributos </th>
-                               
-                            
-                            </tr>
-                        </thead>
-                        
-                     
-                        
-                                    <tbody>
-                                  
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Vaccine</td>                         
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Variable</td>                         
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Virus</td>                         
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4</th>
-                                            <td>Data</td>                         
-                                        </tr>
-                                      
-                                    </tbody>
-                         
-                        
-                        </Table> 
-                    </center>
-                    
-                    </div>
-                   </CardBody>
-                </Card>  
-                   
-            </div>
-
+              </CardBody>
+            </Card>
             
+          </center>
+          
+         
+           
         </div>
     )
-                           
+
 }
 
 
+function transformar(elemento){
+
+    return (<div>{elemento.name} --- {elemento.image_url}</div>)
+ 
+ }
+
+
  export async function getServerSideProps(context){
-    const pesquisar = context.query;
-    const res = await fetch(`https://digimon-api.vercel.app/api/digimon/`)
-    const resposta = await fetch(`https://digimoncard.io/api-public/getAllCards.php?sort=name&series=Digimon Card Game&sortdirection=asc`)
+    const  {pesquisar}  = context.query
+    const res = await fetch(`https://digimoncard.io/api-public/search.php?attribute=` + pesquisar )
     const data = await res.json()
-    const data2 = await resposta.json()
+    
     return {
         props: {
             data,
-            pesquisar,
-            data2
+            pesquisar
         }
     }
-   
-     
-    
   
   }
-  
